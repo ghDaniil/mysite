@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  </head>
+  <body>
+      <h1>dfdfdf</h1>
+      <h2>{{adminName}}</h2>
+      {% if questions %}
+        <ol>
+            {% for q in questions %}
+            <li>
+                <a href="/polls/{{q.pk}}/">{{q.text}}</a>
+            </li>
+
+            {% endfor %}
+        </ol>
+      {% endif %}
+
+      
+  </body>
+</html>

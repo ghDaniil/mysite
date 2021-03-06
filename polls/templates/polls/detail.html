@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  </head>
+  <body>
+      <h1>dfdfdf</h1>
+      <h2>{{questions.choice_set.all}}</h2>
+    {% if questions.choice_set.all %}
+        <form action="">
+            {% for c in questions.choice_set.all %}
+                <input id="c + choice.pk" type="checkbox"> <label for="c{{c.pk}}">{{c.text}}</label>
+                <br>
+            {% endfor %}
+            <button type="submit">vote</button>
+        </form>
+       
+    {% endif %}
+
+  </body>
+</html>
