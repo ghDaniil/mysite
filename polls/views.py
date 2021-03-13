@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 from .models import Question, Choice
 
 
@@ -23,10 +23,20 @@ def detail(request, q_id):
         "questions":questions
     }
     return render(request,"polls/detail.html",context)
-def results(request, q_id):
-    res = "Result for question number %s." %q_id
-    return HttpResponse(res)
 
 def vote(request, q_id):
-    res = "Vote for question number %s." %q_id
-    return HttpResponse(res)
+    choices=request.POST.getlist('choice')
+    question = Question.objects.get(pk=q_id)
+    for c_pk in choices:
+        choice = question.choice_set.get(pk=c_pk)
+        choice.votes +=1
+        choice.save()
+    return HttpResponseRedirect(reverse("polls:results", args=(q_id,) ) )
+
+
+def results(request, q_id):
+    questions = Question.objects.get(pk=q_id)
+    context ={
+        "questions":questions
+    }
+    return render(request,"polls/results.html",context)
