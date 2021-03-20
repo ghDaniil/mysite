@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   </head>
   <body>
-      <h1>{{questions.text}}</h1>
-    {% if questions.choice_set.all %}
-        <form method="POST" action="{% url 'polls:vote' questions.pk %}">
+      <h1>{{question.text}}</h1>
+    {% if question.choice_set.all %}
+        <form method="POST" action="{% url 'polls:vote' question.pk %}">
         {% csrf_token %}
-            {% for c in questions.choice_set.all %}
+            {% for c in question.choice_set.all %}
                 <input id="c + choice.pk" value="{{c.pk}}" name="choice" type="checkbox"> <label for="c{{c.pk}}">{{c.text}}</label>
                 <br>
             {% endfor %}

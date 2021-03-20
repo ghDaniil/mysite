@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   </head>
   <body>
-        <h1>{{questions.text}}</h1>
-        {% if questions.choice_set.all %}
+        <h1>{{question.text}}</h1>
+        {% if question.choice_set.all %}
             <ul>
-                {% for c in questions.choice_set.all  %}
+                {% for c in question.choice_set.all  %}
                     <li>{{c.text}}:{{c.votes}}</li>
 
                 

@@ -2,27 +2,25 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from .models import Question, Choice
+from django.views import generic
 
 
-def index(request):
-    questions =Question.objects.all()
-    context = {
-        "adminName":"danil",
-        "questions": questions
-    }
+class IndexView(generic.ListView):
+    template_name = "polls/index.html"
+    context_object_name="questions"
+    
+    
+    def get_queryset(self):
+        return Question.objects.all()
 
-    return render(request,"polls/index.html",context)
+class DetailView(generic.DetailView):
+    model= Question
+    template_name = "polls/detail.html"
+    
 
-def meme(request):
-    return HttpResponse('<img src="https://w7.pngwing.com/pngs/892/977/png-transparent-bicycle-wheels-cycling-minibike-motorcycle-gears-bicycle-motorcycle-transport.png">')
-# Create your views here.
-
-def detail(request, q_id):
-    questions = Question.objects.get(pk=q_id)
-    context ={
-        "questions":questions
-    }
-    return render(request,"polls/detail.html",context)
+class ResultsView(generic.DetailView):
+    template_name = "polls/results.html"
+    model= Question
 
 def vote(request, q_id):
     choices=request.POST.getlist('choice')
@@ -34,9 +32,4 @@ def vote(request, q_id):
     return HttpResponseRedirect(reverse("polls:results", args=(q_id,) ) )
 
 
-def results(request, q_id):
-    questions = Question.objects.get(pk=q_id)
-    context ={
-        "questions":questions
-    }
-    return render(request,"polls/results.html",context)
+
